@@ -7,14 +7,16 @@ STOP_WORDS = [
 
 class FileReader:
     def __init__(self, filename):
-        pass
+        self.poem = filename
 
     def read_contents(self):
         """
         This should read all the contents of the file
         and return them as one string.
         """
-        raise NotImplementedError("FileReader.read_contents")
+        self.poem = open(self.poem, "r")
+        return self.poem.readlines()
+        # raise NotImplementedError("FileReader.read_contents")
 
 
 class WordList:
@@ -27,14 +29,14 @@ class WordList:
         is responsible for lowercasing all words and stripping
         them of punctuation.
         """
-        raise NotImplementedError("WordList.extract_words")
+        # raise NotImplementedError("WordList.extract_words")
 
     def remove_stop_words(self):
         """
         Removes all stop words from our word list. Expected to
         be run after extract_words.
         """
-        raise NotImplementedError("WordList.remove_stop_words")
+        # raise NotImplementedError("WordList.remove_stop_words")
 
     def get_freqs(self):
         """
@@ -43,7 +45,7 @@ class WordList:
         extract_words and remove_stop_words. The data structure
         could be a dictionary or another type of object.
         """
-        raise NotImplementedError("WordList.get_freqs")
+        # raise NotImplementedError("WordList.get_freqs")
 
 
 class FreqPrinter:
@@ -67,7 +69,11 @@ class FreqPrinter:
        rights | 6    ******
         right | 6    ******
         """
-        raise NotImplementedError("FreqPrinter.print_freqs")
+        # raise NotImplementedError("FreqPrinter.print_freqs")
+
+
+read = FileReader("one-today.txt")
+print(read.read_contents())
 
 
 if __name__ == "__main__":
