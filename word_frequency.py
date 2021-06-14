@@ -21,7 +21,7 @@ class FileReader:
 
 class WordList:
     def __init__(self, text):
-        pass
+        self.text = text
 
     def extract_words(self):
         """
@@ -29,6 +29,12 @@ class WordList:
         is responsible for lowercasing all words and stripping
         them of punctuation.
         """
+        words = []
+        for i in self.text:
+            x = i.split(" ")
+            # words.append(x)
+            for y in x:
+                print(y)
         # raise NotImplementedError("WordList.extract_words")
 
     def remove_stop_words(self):
