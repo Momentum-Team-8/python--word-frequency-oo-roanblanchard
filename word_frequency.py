@@ -95,11 +95,7 @@ class FreqPrinter:
         # raise NotImplementedError("FreqPrinter.print_freqs")
 
 
-read = FileReader("one-today.txt")
-w_list = WordList(read.read_contents())
-extracted_words = w_list.extract_words()
-stop_words_removed = w_list.remove_stop_words()
-frequency = w_list.get_freqs()
+
 
 
 
@@ -124,3 +120,10 @@ if __name__ == "__main__":
     else:
         print(f"{file} does not exist!")
         sys.exit(1)
+
+
+read = FileReader(file)
+w_list = WordList(read.read_contents())
+extracted_words = w_list.extract_words()
+stop_words_removed = w_list.remove_stop_words()
+frequency = w_list.get_freqs()
