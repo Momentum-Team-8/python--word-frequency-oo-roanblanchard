@@ -32,7 +32,7 @@ class WordList:
         them of punctuation.
         """
         for i in self.text:
-            x = i.split(" ")
+            x = i.split()
             # words.append(x)
             for y in x:
                 y = y.lower()
@@ -50,7 +50,7 @@ class WordList:
                 i = i.replace(i, i[0:-1])
             elif i[0] in punc:
                 i = i.replace(i, i[1:-1])
-            elif i in STOP_WORDS:
+            if i in STOP_WORDS:
                 pass
             elif i in self.clean_words:
                 self.clean_words[i] += 1
