@@ -91,7 +91,7 @@ class FreqPrinter:
         right | 6    ******
         """
         for i in sorted(self.freqs, key=self.freqs.get, reverse=True):
-            print(i, '|', self.freqs[i])
+            print(i, '|', self.freqs[i], '*'*self.freqs[i])
         # raise NotImplementedError("FreqPrinter.print_freqs")
 
 
