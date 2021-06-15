@@ -1,7 +1,7 @@
 STOP_WORDS = [
     'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from', 'has',
     'he', 'i', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the', 'to',
-    'were', 'will', 'with'
+    'were', 'will', 'with', '\n'
 ]
 
 
@@ -22,6 +22,8 @@ class FileReader:
 class WordList:
     def __init__(self, text):
         self.text = text
+        self.words = []
+        self.clean_words = {}
 
     def extract_words(self):
         """
@@ -29,21 +31,33 @@ class WordList:
         is responsible for lowercasing all words and stripping
         them of punctuation.
         """
-        words = []
         for i in self.text:
             x = i.split(" ")
             # words.append(x)
             for y in x:
                 y = y.lower()
-                words.append(y)
-        return words
-        # raise NotImplementedError("WordList.extract_words")
+                self.words.append(y)
+        return self.words
 
     def remove_stop_words(self):
         """
         Removes all stop words from our word list. Expected to
         be run after extract_words.
         """
+        punc = '''!()-[]{};:'"\, <>./?@#$%^&*_~-'''
+        for i in self.words:
+            if i[-1] in punc:
+                i = i.replace(i, i[0:-1])
+            elif i[0] in punc:
+                i = i.replace(i, i[1:-1])
+            elif i in STOP_WORDS:
+                pass
+            elif i in self.clean_words:
+                self.clean_words[i] += 1
+            else:
+                self.clean_words[i] = 1
+        return self.clean_words
+
         # raise NotImplementedError("WordList.remove_stop_words")
 
     def get_freqs(self):
@@ -82,7 +96,9 @@ class FreqPrinter:
 
 read = FileReader("one-today.txt")
 w_list = WordList(read.read_contents())
-print(w_list.extract_words())
+extracted_words = w_list.extract_words()
+stop_words_removed = w_list.remove_stop_words()
+print(stop_words_removed)
 
 
 if __name__ == "__main__":
