@@ -16,6 +16,7 @@ class FileReader:
         """
         self.poem = open(self.poem, "r")
         return self.poem.readlines()
+        file.close()
         # raise NotImplementedError("FileReader.read_contents")
 
 
@@ -56,9 +57,7 @@ class WordList:
                 self.clean_words[i] += 1
             else:
                 self.clean_words[i] = 1
-        return self.clean_words
 
-        # raise NotImplementedError("WordList.remove_stop_words")
 
     def get_freqs(self):
         """
@@ -67,12 +66,12 @@ class WordList:
         extract_words and remove_stop_words. The data structure
         could be a dictionary or another type of object.
         """
-        # raise NotImplementedError("WordList.get_freqs")
+        return self.clean_words
 
 
 class FreqPrinter:
     def __init__(self, freqs):
-        pass
+        self.freqs = freqs
 
     def print_freqs(self):
         """
@@ -91,6 +90,8 @@ class FreqPrinter:
        rights | 6    ******
         right | 6    ******
         """
+        for i in sorted(self.freqs, key=self.freqs.get, reverse=True):
+            print(i, '|', self.freqs[i])
         # raise NotImplementedError("FreqPrinter.print_freqs")
 
 
@@ -98,7 +99,8 @@ read = FileReader("one-today.txt")
 w_list = WordList(read.read_contents())
 extracted_words = w_list.extract_words()
 stop_words_removed = w_list.remove_stop_words()
-print(stop_words_removed)
+frequency = w_list.get_freqs()
+
 
 
 if __name__ == "__main__":
