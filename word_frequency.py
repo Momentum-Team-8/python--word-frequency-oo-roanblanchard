@@ -34,7 +34,9 @@ class WordList:
             x = i.split(" ")
             # words.append(x)
             for y in x:
-                print(y)
+                y = y.lower()
+                words.append(y)
+        return words
         # raise NotImplementedError("WordList.extract_words")
 
     def remove_stop_words(self):
@@ -79,7 +81,8 @@ class FreqPrinter:
 
 
 read = FileReader("one-today.txt")
-print(read.read_contents())
+w_list = WordList(read.read_contents())
+print(w_list.extract_words())
 
 
 if __name__ == "__main__":
