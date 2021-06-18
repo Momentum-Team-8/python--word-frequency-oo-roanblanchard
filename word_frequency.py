@@ -1,25 +1,28 @@
 STOP_WORDS = [
     'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from', 'has',
     'he', 'i', 'in', 'is', 'it', 'its', 'of', 'on', 'that', 'the', 'to',
-    'were', 'will', 'with'
+    'were', 'will', 'with', '\n'
 ]
 
 
 class FileReader:
     def __init__(self, filename):
-        pass
+        self.poem = filename
 
     def read_contents(self):
         """
         This should read all the contents of the file
         and return them as one string.
         """
-        raise NotImplementedError("FileReader.read_contents")
+        self.poem = open(self.poem, "r")
+        return self.poem.readlines()
 
 
 class WordList:
     def __init__(self, text):
-        pass
+        self.text = text
+        self.words = []
+        self.clean_words = {}
 
     def extract_words(self):
         """
@@ -27,14 +30,32 @@ class WordList:
         is responsible for lowercasing all words and stripping
         them of punctuation.
         """
-        raise NotImplementedError("WordList.extract_words")
+        for i in self.text:
+            x = i.split()
+            # words.append(x)
+            for y in x:
+                y = y.lower()
+                self.words.append(y)
+        return self.words
 
     def remove_stop_words(self):
         """
         Removes all stop words from our word list. Expected to
         be run after extract_words.
         """
-        raise NotImplementedError("WordList.remove_stop_words")
+        punc = '''!()-[]{};:'"\, <>./?@#$%^&*_~-'''
+        for i in self.words:
+            if i[-1] in punc:
+                i = i.replace(i, i[0:-1])
+            elif i[0] in punc:
+                i = i.replace(i, i[1:-1])
+            if i in STOP_WORDS:
+                pass
+            elif i in self.clean_words:
+                self.clean_words[i] += 1
+            else:
+                self.clean_words[i] = 1
+
 
     def get_freqs(self):
         """
@@ -43,12 +64,12 @@ class WordList:
         extract_words and remove_stop_words. The data structure
         could be a dictionary or another type of object.
         """
-        raise NotImplementedError("WordList.get_freqs")
+        return self.clean_words
 
 
 class FreqPrinter:
     def __init__(self, freqs):
-        pass
+        self.freqs = freqs
 
     def print_freqs(self):
         """
@@ -67,7 +88,13 @@ class FreqPrinter:
        rights | 6    ******
         right | 6    ******
         """
-        raise NotImplementedError("FreqPrinter.print_freqs")
+        for i in sorted(self.freqs, key=self.freqs.get, reverse=True):
+            print(i, '|', self.freqs[i], '*'*self.freqs[i])
+        # raise NotImplementedError("FreqPrinter.print_freqs")
+
+
+
+
 
 
 if __name__ == "__main__":
